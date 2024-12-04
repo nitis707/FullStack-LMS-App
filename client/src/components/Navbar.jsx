@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import DarkMode from "@/DarkMode";
-import MobileNavbar from "@/MobileNavbar";
+import MobileNavbar from "./MobileNavbar";
 
 const Navbar = () => {
   const user = true;

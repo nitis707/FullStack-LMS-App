@@ -11,8 +11,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LogOut, Menu } from "lucide-react";
-import DarkMode from "./DarkMode";
-import { DropdownMenuSeparator } from "./components/ui/dropdown-menu";
+import DarkMode from "../DarkMode";
+import { DropdownMenuSeparator } from "./ui/dropdown-menu";
 
 const MobileNavbar = () => {
   const role = "instructor";
