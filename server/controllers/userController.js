@@ -68,6 +68,14 @@ export const login = async (req, res) => {
             });
         }
 
+        // Ensure password is a valid string
+        if (typeof password !== 'string') {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid password format!",
+            });
+        }
+
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
             return res.status(400).json({
