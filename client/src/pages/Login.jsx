@@ -21,13 +21,18 @@ const Login = () => {
   const [loginInput, setLoginInput] = useState({ email: "", password: "" });
 
   const changeInputHandler = (e, type) => {
-    const [name, value] = e.target;
+    const { name, value } = e.target;
 
     if (type === "signup") {
       setSignupInput({ ...signupInput, [name]: value });
     } else {
       setLoginInput({ ...loginInput, [name]: value });
     }
+  };
+
+  const handleRegistration = (type) => {
+    const inputData = type === "signup" ? signupInput : loginInput;
+    console.log(inputData);
   };
 
   return (
@@ -55,7 +60,7 @@ const Login = () => {
                   type="text"
                   name="name"
                   value={signupInput.name}
-                  onChange={changeInputHandler}
+                  onChange={(e) => changeInputHandler(e, "signup")}
                   placeholder="Eg. Nitish"
                   required
                 />
@@ -68,7 +73,7 @@ const Login = () => {
                   type="email"
                   name="email"
                   value={signupInput.email}
-                  onChange={changeInputHandler}
+                  onChange={(e) => changeInputHandler(e, "signup")}
                   placeholder="abc@gmail.com"
                   required
                 />
@@ -81,14 +86,16 @@ const Login = () => {
                   type="password"
                   name="password"
                   value={signupInput.password}
-                  onChange={changeInputHandler}
+                  onChange={(e) => changeInputHandler(e, "signup")}
                   required
                 />
               </div>
             </CardContent>
 
             <CardFooter>
-              <Button>Signup</Button>
+              <Button onClick={() => handleRegistration("signup")}>
+                Signup
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>
@@ -110,7 +117,7 @@ const Login = () => {
                   type="email"
                   name="email"
                   value={loginInput.email}
-                  onChange={changeInputHandler}
+                  onChange={(e) => changeInputHandler(e, "login")}
                   placeholder="abc@gmail.com"
                   required
                 />
@@ -123,14 +130,14 @@ const Login = () => {
                   type="password"
                   name="password"
                   value={loginInput.password}
-                  onChange={changeInputHandler}
+                  onChange={(e) => changeInputHandler(e, "login")}
                   required
                 />
               </div>
             </CardContent>
 
             <CardFooter>
-              <Button>Login</Button>
+              <Button onClick={() => handleRegistration("login")}>Login</Button>
             </CardFooter>
           </Card>
         </TabsContent>
