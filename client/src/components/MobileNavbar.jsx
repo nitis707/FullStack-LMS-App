@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { LogOut, Menu } from "lucide-react";
 import DarkMode from "../DarkMode";
-import { DropdownMenuSeparator } from "./ui/dropdown-menu";
+import { Separator } from "./ui/separator";
 
 const MobileNavbar = () => {
   const role = "instructor";
@@ -36,7 +36,7 @@ const MobileNavbar = () => {
             <SheetDescription></SheetDescription>
             <DarkMode />
           </SheetHeader>
-          <DropdownMenuSeparator />
+          <Separator />
 
           <nav className="flex flex-col space-y-4">
             <span>My Learning</span>
