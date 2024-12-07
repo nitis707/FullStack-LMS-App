@@ -83,10 +83,12 @@ const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
-                {user.role === "instructor" && (
+                {user?.role === "instructor" && (
                   <>
                     <DropdownMenuSeparator />
-                    <Button>Dashboard</Button>
+                    <Button onClick={() => navigate("/admin/dashboard")}>
+                      Dashboard
+                    </Button>
                   </>
                 )}
               </DropdownMenuContent>
