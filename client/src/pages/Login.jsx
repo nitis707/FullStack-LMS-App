@@ -68,25 +68,19 @@ const Login = () => {
   useEffect(() => {
     if (registerIsSuccess && registerData) {
       toast.success(registerData.message || "Signup successful!");
-    }
-    if (registerError) {
+    } else if (registerError) {
       toast.error(registerError.data.message || "Signup Failed!");
     }
+  }, [registerIsSuccess, registerError, registerData]);
+
+  useEffect(() => {
     if (loginIsSuccess && loginData) {
       toast.success(loginData.message || "Login successful!");
       navigate("/");
+    } else if (loginError) {
+      toast.error(loginError.data.message || "Login Failed!");
     }
-    if (loginError) {
-      toast.error(loginError.data.message || "login Failed!");
-    }
-  }, [
-    loginIsLoading,
-    registerIsLoading,
-    loginData,
-    registerData,
-    loginError,
-    registerError,
-  ]);
+  }, [loginIsSuccess, loginError, loginData]);
 
   return (
     <div className="flex items-center justify-center h-screen">
