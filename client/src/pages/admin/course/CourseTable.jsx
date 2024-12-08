@@ -40,7 +40,7 @@ const CourseTable = () => {
               <TableCell className="font-medium">
                 {course?.courseTitle || "N/A"}
               </TableCell>
-              <TableCell>{course?.price || "N/A"}</TableCell>
+              <TableCell>{course?.coursePrice || "N/A"}</TableCell>
               <TableCell>
                 <Badge>{course?.isPublished ? "Published" : "Draft"}</Badge>
               </TableCell>
