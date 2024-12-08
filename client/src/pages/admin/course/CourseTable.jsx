@@ -5,7 +5,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -22,7 +21,7 @@ const CourseTable = () => {
   if (isLoading) return <h1>Loading...</h1>;
 
   return (
-    <div className="mt-20">
+    <div className="">
       <Button onClick={() => navigate("create")}>Create a new course</Button>
 
       <Table>
@@ -46,7 +45,11 @@ const CourseTable = () => {
                 <Badge>{course?.isPublished ? "Published" : "Draft"}</Badge>
               </TableCell>
               <TableCell className="text-right">
-                <Button size="sm" variant="ghost">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => navigate(`${course._id}`)}
+                >
                   <Edit />
                 </Button>
               </TableCell>

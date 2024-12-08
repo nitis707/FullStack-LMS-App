@@ -43,7 +43,7 @@ const AddCourse = () => {
   }, [isSuccess, error]);
 
   return (
-    <div className="flex-1 mx-10 mt-20">
+    <div className="flex-1 mx-10">
       <div className="mb-4">
         <h1 className="font-bold text-xl">
           Lets add course, add some basic details for your new course
@@ -54,8 +54,8 @@ const AddCourse = () => {
         </p>
       </div>
 
-      <div className="">
-        <div className="space-y-4">
+      <div className="space-y-4">
+        <div>
           <Label>Title</Label>
           <Input
             type="text"
@@ -64,7 +64,7 @@ const AddCourse = () => {
             placeholder="Your Course name"
           />
         </div>
-        <div className="space-y-4">
+        <div>
           <Label>Category</Label>
           <Select onValueChange={getSelectedCourseHandler}>
             <SelectTrigger className="w-[180px]">
