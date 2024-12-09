@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/table";
 import { useNavigate } from "react-router-dom";
 import { useGetCreatorCourseQuery } from "@/features/api/courseApi";
-import { Edit } from "lucide-react";
+import { Edit, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const CourseTable = () => {
   const { data, isLoading } = useGetCreatorCourseQuery();
   const navigate = useNavigate();
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader2 className="h-4 w-4 animate-spin" />;
 
   return (
     <div className="">
