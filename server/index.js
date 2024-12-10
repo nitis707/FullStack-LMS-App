@@ -5,6 +5,7 @@ import cors from "cors"
 import connectDB from "./database/db.js";
 import userRoute from "./routes/userRoute.js";
 import courseRoute from "./routes/courseRoute.js";
+import mediaRoute from "./routes/mediaRoute.js";
 
 const app = express();
 dotenv.config({});
@@ -20,6 +21,7 @@ app.use(cors({
 }));
 
 // apis
+app.use("/api/v1/media", mediaRoute)
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/course", courseRoute);
 
