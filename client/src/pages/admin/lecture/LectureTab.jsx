@@ -10,8 +10,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
+import { useEditLectureMutation } from "@/features/api/courseApi";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const MEDIA_API = "http://localhost:8080/api/v1/media";
@@ -23,6 +25,11 @@ const LectureTab = () => {
   const [mediaProgress, setMediaProgress] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [btnDisable, setBtnDisable] = useState(true);
+  const params = useParams();
+  const { courseId, lectureId } = params;
+
+  const [editLecture, { data, isLoading, error, isSuccess }] =
+    useEditLectureMutation();
 
   const fileChangeHandler = async (e) => {
     const file = e.target.files[0];
@@ -55,6 +62,25 @@ const LectureTab = () => {
     }
   };
 
+  const editLectureHandler = async (req, res) => {
+    await editLecture({
+      lectureTitle,
+      videoInfo: uploadVideInfo,
+      isPreviewFree: isFree,
+      courseId,
+      lectureId,
+    });
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data.message);
+    }
+    if (error) {
+      toast.error(error.data.message);
+    }
+  }, [isSuccess, error]);
+
   return (
     <Card>
       <CardHeader className="flex justify-between">
@@ -73,7 +99,12 @@ const LectureTab = () => {
       <CardContent>
         <div>
           <Label>Title</Label>
-          <Input type="text" placeholder="Ex. Introduction to JavaScript" />
+          <Input
+            type="text"
+            value={lectureTitle}
+            onChange={(e) => setLectureTitle(e.target.value)}
+            placeholder="Ex. Introduction to JavaScript"
+          />
         </div>
 
         <div className="my-5">
@@ -89,7 +120,11 @@ const LectureTab = () => {
         </div>
 
         <div className="flex items-center space-x-2 my-5">
-          <Switch id="airplane-mode" />
+          <Switch
+            checked={isFree}
+            onCheckedChange={setIsFree}
+            id="airplane-mode"
+          />
           <Label htmlFor="airplane-mode">Is this video FREE</Label>
         </div>
 
@@ -101,7 +136,7 @@ const LectureTab = () => {
         )}
 
         <div className="mt-4">
-          <Button>Update Lecture</Button>
+          <Button onClick={editLectureHandler}>Update Lecture</Button>
         </div>
       </CardContent>
     </Card>
