@@ -153,3 +153,27 @@ export const createLecture = async (req, res) => {
         })
     }
 }
+
+export const getCourseLecture = async (req, res) => {
+    try {
+        const { courseId } = req.params;
+        const course = await Course.findById(courseId).populate("lectures");
+
+        if (!course) {
+            return res.status(404).json({
+                message: "Course not Found!"
+            })
+        }
+
+        return res.status(200).json({
+            lectures: course.lectures,
+        })
+
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Failed to get lectures!"
+        })
+    }
+}

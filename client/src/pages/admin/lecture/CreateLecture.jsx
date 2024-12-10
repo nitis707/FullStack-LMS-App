@@ -4,8 +4,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
-import { useCreateLectureMutation } from "@/features/api/courseApi";
+import {
+  useCreateLectureMutation,
+  useGetCourseLectureQuery,
+} from "@/features/api/courseApi";
 import { toast } from "sonner";
+import Lecture from "./Lecture";
 
 const CreateLecture = () => {
   const [lectureTitle, setLectureTitle] = useState("");
@@ -17,12 +21,20 @@ const CreateLecture = () => {
   const [createLecture, { data, isLoading, isSuccess, error }] =
     useCreateLectureMutation();
 
+  const {
+    data: lectureData,
+    isLoading: lecutreLoading,
+    isError: lectureError,
+    refetch,
+  } = useGetCourseLectureQuery(courseId);
+
   const createLectureHandler = async () => {
     await createLecture({ lectureTitle, courseId });
   };
 
   useEffect(() => {
     if (isSuccess) {
+      refetch();
       toast.success(data.message);
     }
 
@@ -70,6 +82,25 @@ const CreateLecture = () => {
               "Create lecture"
             )}
           </Button>
+        </div>
+
+        <div className="mt-10">
+          {lecutreLoading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : lectureError ? (
+            <p>Failed to load lectures!</p>
+          ) : lectureData.lectures.length === 0 ? (
+            <p>No lectures available</p>
+          ) : (
+            lectureData.lectures.map((lecture, index) => (
+              <Lecture
+                key={lecture._id}
+                lecture={lecture}
+                courseId={courseId}
+                index={index}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>
