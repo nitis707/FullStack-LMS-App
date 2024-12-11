@@ -88,7 +88,7 @@ export const stripeWebhook = async (req, res) => {
 
     // Handle the checkout session completed event
     if (event.type === "checkout.session.completed") {
-        console.log("check session complete is called");
+        console.log("Check session complete is called!");
 
         try {
             const session = event.data.object;
@@ -131,7 +131,7 @@ export const stripeWebhook = async (req, res) => {
             );
         } catch (error) {
             console.error("Error handling event:", error);
-            return res.status(500).json({ message: "Internal Server Error" });
+            return res.status(500).json({ message: "Internal Server Error!" });
         }
     }
     res.status(200).send();
@@ -150,7 +150,7 @@ export const getCourseDetailWithPurchaseStatus = async (req, res) => {
         console.log(purchased);
 
         if (!course) {
-            return res.status(404).json({ message: "course not found!" });
+            return res.status(404).json({ message: "Course not found!" });
         }
 
         return res.status(200).json({
