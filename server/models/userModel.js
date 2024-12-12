@@ -24,6 +24,12 @@ const userSchema = new mongoose.Schema({
             ref: "Course"
         }
     ],
+    purchasedLectures: [
+        {
+            lectureId: { type: mongoose.Schema.Types.ObjectId, ref: "Lecture" },
+            courseId: { type: mongoose.Schema.Types.ObjectId, ref: "Course" },
+        },
+    ],
     photoUrl: {
         type: String,
         default: ""

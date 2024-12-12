@@ -107,10 +107,18 @@ export const stripeWebhook = async (req, res) => {
             purchase.status = "completed";
 
             // Make all lectures visible by setting `isPreviewFree` to true
+            // Prepare user-specific lecture access records
             if (purchase.courseId && purchase.courseId.lectures.length > 0) {
-                await Lecture.updateMany(
-                    { _id: { $in: purchase.courseId.lectures } },
-                    { $set: { isPreviewFree: true } }
+                const purchasedLectures = purchase.courseId.lectures.map((lectureId) => ({
+                    lectureId,
+                    courseId: purchase.courseId._id,
+                }));
+
+                // Update the User model to add purchased lectures
+                await User.findByIdAndUpdate(
+                    purchase.userId,
+                    { $addToSet: { purchasedLectures: { $each: purchasedLectures } } },
+                    { new: true }
                 );
             }
 
@@ -146,16 +154,28 @@ export const getCourseDetailWithPurchaseStatus = async (req, res) => {
             .populate({ path: "creator" })
             .populate({ path: "lectures" });
 
-        const purchased = await CoursePurchase.findOne({ userId, courseId });
-        console.log(purchased);
-
         if (!course) {
             return res.status(404).json({ message: "Course not found!" });
         }
 
+        // Check purchase status
+        const purchased = await CoursePurchase.findOne({ userId, courseId });
+
+        let lectures = [];
+        if (purchased) {
+            // Allow access to all lectures
+            lectures = course.lectures.map((lecture) => ({
+                ...lecture._doc,
+                isPreviewFree: true, // Mark as free for this user
+            }));
+        } else {
+            // Only show free lectures
+            lectures = course.lectures.filter((lecture) => lecture);
+        }
+
         return res.status(200).json({
-            course,
-            purchased: !!purchased, // true if purchased, false otherwise
+            course: { ...course._doc, lectures },
+            purchased: !!purchased, // True if purchased, false otherwise
         });
     } catch (error) {
         console.log(error);
