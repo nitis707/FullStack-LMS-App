@@ -41,7 +41,7 @@ const LectureTab = () => {
   useEffect(() => {
     if (lecture) {
       setLectureTitle(lecture.lectureTitle);
-      setIsFree(lecture.isPreviewFree);
+      setIsFree(lecture.isPreviewFree || false);
       setUploadVideoInfo(lecture.videoInfo);
     }
   }, [lecture]);
@@ -171,7 +171,7 @@ const LectureTab = () => {
         <div className="flex items-center space-x-2 my-5">
           <Switch
             checked={isFree}
-            onCheckedChange={setIsFree}
+            onCheckedChange={(value) => setIsFree(value)}
             id="airplane-mode"
           />
           <Label htmlFor="airplane-mode">Is this video FREE</Label>
