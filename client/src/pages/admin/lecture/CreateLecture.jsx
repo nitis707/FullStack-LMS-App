@@ -36,6 +36,7 @@ const CreateLecture = () => {
     if (isSuccess) {
       refetch();
       toast.success(data.message);
+      setLectureTitle(""); // Clear input when success state is triggered
     }
 
     if (error) {
