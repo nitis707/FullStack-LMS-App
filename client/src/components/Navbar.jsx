@@ -86,7 +86,10 @@ const Navbar = () => {
                 {user?.role === "instructor" && (
                   <>
                     <DropdownMenuSeparator />
-                    <Button onClick={() => navigate("/admin/dashboard")}>
+                    <Button
+                      className="w-full"
+                      onClick={() => navigate("/admin/dashboard")}
+                    >
                       Dashboard
                     </Button>
                   </>
