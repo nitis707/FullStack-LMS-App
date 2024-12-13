@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,9 +13,28 @@ import {
 import { LogOut, Menu } from "lucide-react";
 import DarkMode from "../DarkMode";
 import { Separator } from "./ui/separator";
+import { Link, useNavigate } from "react-router-dom";
+import { useLogoutUserMutation } from "@/features/api/authApi";
+import { toast } from "sonner";
+import { useSelector } from "react-redux";
 
 const MobileNavbar = () => {
-  const role = "instructor";
+  const { user } = useSelector((store) => store.auth);
+
+  const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
+
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    await logoutUser();
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data.message || "User logout.");
+      navigate("/login");
+    }
+  }, [isSuccess]);
 
   return (
     <div>
@@ -23,7 +42,7 @@ const MobileNavbar = () => {
         <SheetTrigger asChild>
           <Button
             size="icon"
-            className="rounded-full bg-gray-200 hover:bg-gray-400"
+            className="rounded-full hover:bg-gray-400"
             variant="outline"
           >
             <Menu />
@@ -39,18 +58,26 @@ const MobileNavbar = () => {
           <Separator />
 
           <nav className="flex flex-col space-y-4">
-            <span>My Learning</span>
-            <span>Edit Profile</span>
-            <div className="flex justify-between items-center">
+            <Link to="my-learning">My Learning</Link>
+            <Link to="profile">Edit Profile</Link>
+            <div
+              onClick={logoutHandler}
+              className="flex justify-between items-center"
+            >
               <span>Logout</span>
               <LogOut />
             </div>
           </nav>
 
-          {role === "instructor" && (
+          {user?.role === "instructor" && (
             <SheetFooter>
               <SheetClose asChild>
-                <Button>Dashboard</Button>
+                <Button
+                  className="w-full"
+                  onClick={() => navigate("/admin/dashboard")}
+                >
+                  Dashboard
+                </Button>
               </SheetClose>
             </SheetFooter>
           )}

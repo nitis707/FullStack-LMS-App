@@ -8,7 +8,7 @@ const MainLayout = () => {
     <div className="h-screen w-screen">
       <Navbar />
       <ScrollArea className="h-full w-full">
-        <div>
+        <div className="flex-1 mt-16">
           <Outlet /> {/* This renders child routes */}
         </div>
       </ScrollArea>
