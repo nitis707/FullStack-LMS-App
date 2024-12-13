@@ -45,7 +45,7 @@ const Filter = ({ handleFilterChange }) => {
     handleFilterChange(selectedCategories, selectedValue);
   };
   return (
-    <div className="w-full md:w-[20%]">
+    <div className="w-full md:w-[20%] mt-4">
       <div className="flex items-center justify-between">
         <h1 className="font-semibold text-lg md:text-xl">Filter Options</h1>
         <Select onValueChange={selectByPriceHandler}>
