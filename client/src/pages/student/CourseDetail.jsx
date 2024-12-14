@@ -27,7 +27,7 @@ const CourseDetail = () => {
   if (isError) return <h>Failed to load course details</h>;
 
   const { course, purchased } = data;
-  console.log(purchased);
+  // console.log(purchased);
 
   const handleContinueCourse = () => {
     if (purchased) {
