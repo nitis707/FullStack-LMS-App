@@ -3,7 +3,7 @@ import { userLoggedIn, userLoggedOut } from "../authSlice";
 
 // redux tutorial
 
-const USER_API = "https://fullstack-lms-app.onrender.com/user/"
+const USER_API = "http://localhost:8080/api/v1/user/"
 
 export const authApi = createApi({
     reducerPath: "authApi",
